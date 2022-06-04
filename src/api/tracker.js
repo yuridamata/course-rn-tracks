@@ -1,8 +1,8 @@
 import axios from "axios";
-import "dotenv/config";
+import { BASE_URL } from "./constants";
 
 export default axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: BASE_URL,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Authorization",

@@ -1,56 +1,30 @@
-import React, { useState, useContext } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, Input, Button } from "react-native-elements";
-import Spacer from "../components/Spacer";
+import React, { useContext } from "react";
+import { View, StyleSheet } from "react-native";
+
+import AuthForm from "../components/AuthForm";
+import NavLink from "../components/NavLink";
+import { NavigationEvents } from "react-navigation";
+
 import { Context as AuthContext } from "../context/AuthContext";
-
 const SignupScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
-      <Spacer>
-        <Text h3>Sign Up for Tracker</Text>
-      </Spacer>
-      <Spacer />
-      <Spacer />
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}
-        label="Email"
+      <NavigationEvents onWillFocus={clearErrorMessage} />
+
+      <AuthForm
+        headerText="Sign Up for Tracker"
+        errorMessage={state.errorsMessage}
+        onSubmit={({ email, password }) => {
+          signup({ email, password });
+        }}
+        submitButtonText="Sign Up"
       />
-      <Spacer />
-      <Input
-        value={password}
-        autoCapitalize="none"
-        secureTextEntry
-        autoCorrect={false}
-        onChangeText={setPassword}
-        label="Password"
+      <NavLink
+        text="Already have an account? Sign in instead."
+        routeName={"Signin"}
       />
-      <Spacer />
-      <Spacer />
-      {state.errorsMessage && (
-        <Text style={styles.errorsMessage}>{state.errorsMessage}</Text>
-      )}
-      <Spacer>
-        <Button
-          title="Sign Ups"
-          onPress={() => {
-            signup({ email, password });
-          }}
-        />
-      </Spacer>
-      <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
-        <Spacer>
-          <Text>Already have an account? Sign in instead.</Text>
-        </Spacer>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -67,12 +41,6 @@ const styles = StyleSheet.create({
     marginBottom: 180,
     justifyContent: "center",
     alignItems: "center",
-  },
-  link: {
-    color: "blue",
-  },
-  errorsMessage: {
-    color: "red",
   },
 });
 

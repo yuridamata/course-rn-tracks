@@ -12,26 +12,24 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
       <Spacer>
         <Text h3>{headerText}</Text>
       </Spacer>
-      <Spacer />
-      <Spacer />
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}
-        label="Email"
-      />
-      <Spacer />
-      <Input
-        value={password}
-        autoCapitalize="none"
-        secureTextEntry
-        autoCorrect={false}
-        onChangeText={setPassword}
-        label="Password"
-      />
-      <Spacer />
-      <Spacer />
+      <Spacer>
+        <Input
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          autoCorrect={false}
+          label="Email"
+        />
+
+        <Input
+          value={password}
+          autoCapitalize="none"
+          secureTextEntry
+          autoCorrect={false}
+          onChangeText={setPassword}
+          label="Password"
+        />
+      </Spacer>
       <Spacer>
         {errorMessage ? (
           <Text style={styles.errorsMessage}>{errorMessage}</Text>

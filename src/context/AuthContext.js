@@ -26,7 +26,7 @@ const clearErrorMessage = (dispatch) => () => {
 
 const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
-  console.log(token);
+  
   if (token) {
     dispatch({ type: "signin", payload: token });
     navigate("mainFlow");
@@ -42,7 +42,7 @@ const signup =
       const response = await trackerApi.post("/signup", { email, password });
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data.token });
-      navigate("mainFlow");
+      navigate("TrackCreate");
     } catch (error) {
       dispatch({
         type: "add_error",
@@ -58,7 +58,7 @@ const signin =
       const response = await trackerApi.post("/signin", { email, password });
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data.token });
-      navigate("mainFlow");
+      navigate("TrackCreate");
     } catch (error) {
       dispatch({
         type: "add_error",

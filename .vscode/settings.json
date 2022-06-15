@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "Navigation",
     "Authentication",
-    "ShowTracks"
+    "ShowTracks",
+    "TrackList"
   ]
 }

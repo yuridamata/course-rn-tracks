@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { Button, Input } from "react-native-elements";
 import Spacer from "../components/Spacer";
 import { Context as LocationContext } from "../context/LocationContext";
+import useSaveTrack from "../hooks/useSaveTrack";
 const TrackForm = () => {
   const {
     state: { name, recording, locations },
@@ -11,14 +12,16 @@ const TrackForm = () => {
     changeName,
   } = useContext(LocationContext);
 
+  const [saveTrack] = useSaveTrack();
+
   return (
     <Spacer>
       <Spacer>
         <Input
-          // value={name}
-          // onChange={(value) => {
-          //   changeName(value);
-          // }}
+          value={name}
+          onChange={({ nativeEvent: { text } }) => {
+            changeName(text);
+          }}
           placeholder="Enter Name"
         />
       </Spacer>
@@ -30,7 +33,7 @@ const TrackForm = () => {
 
       {!recording && locations.length ? (
         <Spacer>
-          <Button title="Save Recording" />
+          <Button title="Save Recording" onPress={saveTrack} />
         </Spacer>
       ) : null}
     </Spacer>

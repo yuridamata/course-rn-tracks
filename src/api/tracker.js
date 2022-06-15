@@ -1,7 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "./constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default axios.create({
+const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -10,3 +11,18 @@ export default axios.create({
     "Content-Type": "application/json;charset=UTF-8",
   },
 });
+
+instance.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+export default instance;
